@@ -162,20 +162,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: 200,
-                color: Colors.red,
+                height: 300,
+                color: Colors.deepOrangeAccent,
                 child: Column(
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: 10.0 , bottom: 5.0),
                       child: Center(
-                          child: Text("About us" , style: GoogleFonts.sora(color: Colors.white , fontSize: 30 , fontWeight: FontWeight.bold))
+                          child: Text("About us" , style: GoogleFonts.sora(color: Colors.black87 , fontSize: 30 , fontWeight: FontWeight.bold))
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 5.0 , bottom: 5.0 , right: 40.0 , left: 40.0),
                       child: Center(
-                          child: Text("To address the challenges faced by the citizens of India. we, student of National Institute of Technology , Uttarakhand had put together a team and build a system. We are probably living in the worst time our modern society has ever seen in terms of women security. We aim to make citizens feel strong enough to fight the odds strong enough to protect themselves against any assaults. We nim at giving power to those without whom we cease to exist. Our idea is to design a system which shall re-establish how very gregarious mankind is. We are focusing on building an effective, fast and reliant system to make the citizens feel safe and empowered. Our platform will ace as 24/7 actice help and companion for citizens so that they don't ever feel that they are alone in the middle of a crisis situation. As it is 24/7, any person can signup/login anytime anywhere and register complaint which will be seen by the police station and action will be taken as soon as complaint will be registered. After action taken by the police the person can see it on site that action is taken and the issue is solved." , style: GoogleFonts.roboto(color: Colors.yellow , fontSize: 17))
+                          child: Text("To address the challenges faced by the citizens of India. we, student of National Institute of Technology , Uttarakhand had put together a team and build a system. We are probably living in the worst time our modern society has ever seen in terms of women security. We aim to make citizens feel strong enough to fight the odds strong enough to protect themselves against any assaults. We nim at giving power to those without whom we cease to exist. Our idea is to design a system which shall re-establish how very gregarious mankind is. We are focusing on building an effective, fast and reliant system to make the citizens feel safe and empowered. Our platform will ace as 24/7 actice help and companion for citizens so that they don't ever feel that they are alone in the middle of a crisis situation. As it is 24/7, any person can signup/login anytime anywhere and register complaint which will be seen by the police station and action will be taken as soon as complaint will be registered. After action taken by the police the person can see it on site that action is taken and the issue is solved." , style: GoogleFonts.roboto(color: Colors.black87, fontSize: 17))
                       ),
                     ),
                   ],
