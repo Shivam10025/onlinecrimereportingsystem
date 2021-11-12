@@ -13,6 +13,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    bool isScreenWide = MediaQuery.of(context).size.width >= 860;
+    bool isScreen = MediaQuery.of(context).size.width >= 591;
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -31,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(top: 50.0 , bottom: 5.0),
                     child: Container(
                       alignment: Alignment.topCenter,
-                        child: Text("Welcome to Police Online FIR System" , style: GoogleFonts.sora(color: Colors.white , fontSize: 30 , fontWeight: FontWeight.bold))
+                        child: Text(isScreen ? "Welcome to Police Online FIR System" : "Welcome" , style: GoogleFonts.sora(color: Colors.white , fontSize: 30 , fontWeight: FontWeight.bold))
                     ),
                   ),
                   Padding(
@@ -40,20 +42,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                         alignment: Alignment.center,
-                        child: Row(
+                        child: Flex(
+                          direction: isScreenWide ? Axis.horizontal : Axis.vertical,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(right: 0.0 , left:  0.0 , top: 0.0 , bottom: 0.0),
+                              padding: EdgeInsets.only(right: 0.0 , left:  0.0 , top: 0.0 , bottom: 5.0),
                               child: Center(
-                                  child: Text("Have a Complain? " , style: GoogleFonts.roboto(color: Colors.yellow , fontSize: 50 , fontWeight: FontWeight.bold)),
+                                  child: Text("Have a Complain? " , style: isScreen ? GoogleFonts.roboto(color: Colors.yellow , fontSize: 50 , fontWeight: FontWeight.bold):GoogleFonts.roboto(color: Colors.yellow , fontSize: 35 , fontWeight: FontWeight.bold)),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(right: 0.0 , left:  0.0 , top: 0.0 , bottom: 0.0),
                               child: Container(
-                                  child: Text("Login as a Official" , style: GoogleFonts.roboto(color: Colors.deepOrangeAccent , fontSize: 30 , fontWeight: FontWeight.bold))
+                                  child: Text("Login as a Official" , style: isScreen ? GoogleFonts.roboto(color: Colors.deepOrangeAccent , fontSize: 30 , fontWeight: FontWeight.bold): GoogleFonts.roboto(color: Colors.deepOrangeAccent , fontSize: 25 , fontWeight: FontWeight.bold))
                               ),
                             ),
                           ],
@@ -61,21 +64,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 50.0 , bottom: 5.0),
+                    padding: EdgeInsets.only(top: 70.0 , bottom: 5.0),
                     child: Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.center,
-                      child: Row(
+                      child: Flex(
+                        direction: isScreenWide ? Axis.horizontal : Axis.vertical,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 5.0 , right: 15.0 , top: 18.0 , bottom: 0.0),
+                            padding: isScreenWide ? const EdgeInsets.only(left: 50.0 , right: 15.0 , top: 18.0 , bottom: 0.0) : const EdgeInsets.only(left: 5.0 , right: 15.0 , top: 18.0 , bottom: 0.0),
                             child: Center(
                               child: Container(
                                 height: 50,
-                                width: 250,
+                                width: 300,
                                 decoration: BoxDecoration(
                                     color: Colors.deepPurple, borderRadius: BorderRadius.circular(20)
                                 ),
@@ -92,11 +96,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 60.0 , right: 15.0 , top: 18.0 , bottom: 0.0),
+                            padding: isScreenWide ? const EdgeInsets.only(left: 70.0 , right: 15.0 , top: 18.0 , bottom: 0.0) : const EdgeInsets.only(left: 9.0 , right: 15.0 , top: 18.0 , bottom: 0.0) ,
                             child: Center(
                               child: Container(
                                 height: 50,
-                                width: 130,
+                                width: 250,
                                 decoration: BoxDecoration(
                                     color: Colors.deepPurple, borderRadius: BorderRadius.circular(20)
                                 ),
@@ -119,9 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Container(
-                height: 100,
                 alignment: Alignment.center,
-                child: Row(
+                child: Flex(
+                  direction: isScreenWide ? Axis.horizontal : Axis.vertical,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -161,30 +165,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              Container(
-                height: 300,
-                color: Colors.deepOrangeAccent,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.0 , bottom: 5.0),
-                      child: Center(
-                          child: Text("About us" , style: GoogleFonts.sora(color: Colors.black87 , fontSize: 30 , fontWeight: FontWeight.bold))
+              Padding(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: Container(
+                  color: Colors.deepOrangeAccent,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.0 , bottom: 5.0),
+                        child: Center(
+                            child: Text("About us" , style: GoogleFonts.sora(color: Colors.black87 , fontSize: 30 , fontWeight: FontWeight.bold))
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 5.0 , bottom: 5.0 , right: 40.0 , left: 40.0),
-                      child: Center(
-                          child: Text("To address the challenges faced by the citizens of India. we, student of National Institute of Technology , Uttarakhand had put together a team and build a system. We are probably living in the worst time our modern society has ever seen in terms of women security. We aim to make citizens feel strong enough to fight the odds strong enough to protect themselves against any assaults. We nim at giving power to those without whom we cease to exist. Our idea is to design a system which shall re-establish how very gregarious mankind is. We are focusing on building an effective, fast and reliant system to make the citizens feel safe and empowered. Our platform will ace as 24/7 actice help and companion for citizens so that they don't ever feel that they are alone in the middle of a crisis situation. As it is 24/7, any person can signup/login anytime anywhere and register complaint which will be seen by the police station and action will be taken as soon as complaint will be registered. After action taken by the police the person can see it on site that action is taken and the issue is solved." , style: GoogleFonts.roboto(color: Colors.black87, fontSize: 17))
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.0 , bottom: 5.0 , right: 40.0 , left: 40.0),
+                        child: Center(
+                            child: Text("To address the challenges faced by the citizens of India. we, student of National Institute of Technology , Uttarakhand had put together a team and build a system. We are probably living in the worst time our modern society has ever seen in terms of women security. We aim to make citizens feel strong enough to fight the odds strong enough to protect themselves against any assaults. We nim at giving power to those without whom we cease to exist. Our idea is to design a system which shall re-establish how very gregarious mankind is. We are focusing on building an effective, fast and reliant system to make the citizens feel safe and empowered. Our platform will ace as 24/7 actice help and companion for citizens so that they don't ever feel that they are alone in the middle of a crisis situation. As it is 24/7, any person can signup/login anytime anywhere and register complaint which will be seen by the police station and action will be taken as soon as complaint will be registered. After action taken by the police the person can see it on site that action is taken and the issue is solved." , style: GoogleFonts.roboto(color: Colors.black87, fontSize: 17))
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 
             ],
           ),
-
         ),
     );
   }
