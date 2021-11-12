@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:onlinecrimereportingsystem/Screesns/home.dart';
+import 'package:onlinecrimereportingsystem/Screesns/regs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: RegScreen(),
     );
   }
 }
