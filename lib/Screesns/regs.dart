@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 class RegScreen extends StatefulWidget {
   const RegScreen({Key? key}) : super(key: key);
 
@@ -11,14 +15,44 @@ class RegScreen extends StatefulWidget {
 
 class _RegScreenState extends State<RegScreen> {
   bool invisible = true;
-  TextEditingController namec = TextEditingController();
-  TextEditingController mailc = TextEditingController();
-  TextEditingController phonec = TextEditingController();
-  TextEditingController pwdc = TextEditingController();
+  bool visible = false ;
+  final name= TextEditingController();
+  final mail = TextEditingController();
+  final phone = TextEditingController();
+  final password = TextEditingController();
+  final gender = TextEditingController();
+  final address = TextEditingController();
+  final aadhar = TextEditingController();
   void _togglePasswordView() {
     setState(() {
       invisible = !invisible;
     });
+  }
+  Future userRegistration() async{
+    String nm = name.text;
+    String email = mail.text;
+    String pwd = password.text;
+    String ph = phone.text;
+    String gd = gender.text;
+    String ad = address.text;
+    String adh = aadhar.text;
+
+    // SERVER API URL
+    var url = Uri.parse('https://ocmr.000webhostapp.com/signup.php');
+
+    // Store all data with Param Name.
+    var data = {'name': nm, 'phone' : ph , 'email': email, 'password' : pwd , 'address' : ad , 'aadhar' : adh , 'gender' : gd};
+
+    // Starting Web API Call.
+    var response = await http.post(url, body: json.encode(data));
+
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+    Fluttertoast.showToast(msg: "Done");
+    // If Web call Success than Hide the CircularProgressIndicator.
+
+    // Showing Alert Dialog with Response JSON Message.
+
   }
   @override
   Widget build(BuildContext context) {
@@ -68,9 +102,10 @@ class _RegScreenState extends State<RegScreen> {
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15.0),
                             child: TextField(
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.emailAddress,
                               cursorColor: Colors.deepPurple,
-                              controller: namec,
+                              controller: name,
+                              autocorrect: true,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -89,7 +124,7 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               cursorColor: Colors.deepPurple,
                               keyboardType: TextInputType.phone,
-                              controller: phonec,
+                              controller: phone,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -108,7 +143,7 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               cursorColor: Colors.deepPurple,
                               keyboardType: TextInputType.emailAddress,
-                              controller: mailc,
+                              controller: mail,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -127,7 +162,7 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               cursorColor: Colors.deepPurple,
                               obscureText: invisible,
-                              controller: pwdc,
+                              controller: password,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -154,7 +189,8 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               keyboardType: TextInputType.streetAddress,
                               cursorColor: Colors.deepPurple,
-                              controller: namec,
+                              controller: address,
+                              autocorrect: true,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -173,7 +209,7 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               keyboardType: TextInputType.phone,
                               cursorColor: Colors.deepPurple,
-                              controller: namec,
+                              controller: aadhar,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -192,7 +228,8 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               keyboardType: TextInputType.text,
                               cursorColor: Colors.deepPurple,
-                              controller: namec,
+                              controller: gender,
+                              autocorrect: true,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -217,20 +254,29 @@ class _RegScreenState extends State<RegScreen> {
                                 ),
                                 child: FlatButton(
                                   onPressed: () {
-                                    if(namec.text.length<3){
+                                    if(name.text.length<3){
                                       Fluttertoast.showToast(msg: "Name should be atleast 3 characters.");
                                     }
-                                    else if(!mailc.text.contains("@")){
+                                    else if(!mail.text.contains("@")){
                                       Fluttertoast.showToast(msg: "Email is Incorrect");
                                     }
-                                    else if(phonec.text.length==0){
+                                    else if(phone.text.length==0){
                                       Fluttertoast.showToast(msg: "Phone Number is Mandatory");
                                     }
-                                    else if(pwdc.text.length<6){
+                                    else if(password.text.length<6){
                                       Fluttertoast.showToast(msg: "Password must be atleast six digits");
                                     }
+                                    else if(address.text.length==0){
+                                      Fluttertoast.showToast(msg: "address Can't be Null");
+                                    }
+                                    else if(gender.text.length!=4 && gender.text.length!=6){
+                                      Fluttertoast.showToast(msg: "Enter valid Gender");
+                                    }
+                                    else if(aadhar.text.length!=12){
+                                      Fluttertoast.showToast(msg: "Enter valid aadhar number");
+                                    }
                                     else {
-                                      //registernuse(context);
+                                      userRegistration();
                                     }
                                     // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
                                   },
@@ -259,6 +305,13 @@ class _RegScreenState extends State<RegScreen> {
                         ],
                       ),
                   ),
+                ),
+                Visibility(
+                    visible: visible,
+                    child: Container(
+                        margin: EdgeInsets.only(bottom: 30),
+                        child: CircularProgressIndicator()
+                    )
                 ),
               ]
             )
