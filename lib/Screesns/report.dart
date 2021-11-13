@@ -33,7 +33,7 @@ class _ReportPortalState extends State<ReportPortal> {
               Padding(
                 padding: EdgeInsets.only(top: 4.0 , bottom: 0.0),
                 child: Container(
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.bottomCenter,
                   width: 500,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
@@ -139,6 +139,7 @@ class _ReportPortalState extends State<ReportPortal> {
                       Padding(
                         padding: EdgeInsets.only(top: 15.0 , bottom: 0 , left: 15.0 , right: 15.0),
                         child: TextField(
+                          maxLines: 10,
                           keyboardType: TextInputType.text,
                           cursorColor: Colors.deepPurple,
                         //  controller: namec,
@@ -162,7 +163,7 @@ class _ReportPortalState extends State<ReportPortal> {
                             height: 50,
                             width: 250,
                             decoration: BoxDecoration(
-                                color: Colors.deepPurple, borderRadius: BorderRadius.circular(20)
+                                color: Colors.deepPurple, borderRadius: BorderRadius.circular(20),
                             ),
                             child: FlatButton(
                               onPressed: () {
@@ -183,16 +184,16 @@ class _ReportPortalState extends State<ReportPortal> {
                                 }
                                 // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
                               },
-                              child: Text(
-                                'Submit',
-                                style: GoogleFonts.sora(color: Colors.white , fontSize: 25),
-                              ),
+                                child: Text(
+                                    'Submit',
+                                  style: GoogleFonts.sora(color: Colors.white , fontSize: 25),
+                                ),
                             ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 0.0),
+                        padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
                         child: Center(
                           child: FlatButton(
                             onPressed: (){
@@ -200,7 +201,7 @@ class _ReportPortalState extends State<ReportPortal> {
                             },
                             child: Text(
                               "See Previous Complain",
-                              style: GoogleFonts.sora(color: Colors.deepPurple, fontSize: 10),
+                              style: GoogleFonts.sora(color: Colors.deepPurple, fontSize: 15),
                             ),
                           ),
                         ),
