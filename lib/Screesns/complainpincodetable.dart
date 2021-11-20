@@ -44,6 +44,15 @@ class _ComplainPinState extends State<ComplainPin> {
                 'ID',
               ))),*/
       GridColumn(
+          columnName: 'Email Address',
+          width: 200,
+          label: Container(
+              padding: EdgeInsets.all(8.0),
+              alignment: Alignment.center,
+              child: Text('Email Address' , style:GoogleFonts.sora(
+                  color: Colors.red, fontWeight: FontWeight.bold , fontSize: 20
+              )))),
+      GridColumn(
           columnName: 'Type Of Crime',
           width: 200,
           label: Container(
@@ -72,7 +81,7 @@ class _ComplainPinState extends State<ComplainPin> {
               )))),
       GridColumn(
           columnName: 'Crime Description',
-          width: 700,
+          width: 500,
           label: Container(
               alignment: Alignment.center,
               padding: EdgeInsets.all(8.0),
@@ -166,6 +175,7 @@ class EmployeeDataSource extends DataGridSource {
     _employeeDataGridRows = employees
         .map<DataGridRow>((e) => DataGridRow(cells: [
       /* DataGridCell<int>(columnName: 'id', value: e.id),*/
+      DataGridCell<String>(columnName: 'Email Address', value: e.email),
       DataGridCell<String>(columnName: 'Type Of Crime', value: e.tc),
       DataGridCell<String>(columnName: 'Zip Code', value: e.cc),
       DataGridCell<String>(columnName: 'Date of Crime', value: e.dc),
@@ -211,10 +221,12 @@ class Employee {
   String cc;
   String dc;
   String jc;
-  Employee({/*required this.id,*/ required this.tc, required this.cc, required this.dc , required this.jc});
+  String email;
+  Employee({/*required this.id,*/ required this.email,required this.tc, required this.cc, required this.dc , required this.jc});
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
       /* id: int.parse(json['id']),*/
+      email: json['email'] as String,
       tc: json['tc'] as String,
       cc: json['cc'] as String,
       dc: json['dc'] as String,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onlinecrimereportingsystem/Screesns/home.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
 class HistoryPortal extends StatefulWidget {
@@ -109,7 +110,18 @@ class _HistoryPortalState extends State<HistoryPortal> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 40.0 , bottom: 5.0),
+                    padding: EdgeInsets.only(top: 15.0),
+                    child: Center(
+                      child: IconButton(
+                        icon: Icon(CupertinoIcons.home , color: Colors.red,),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                        },
+                      ),
+                    )
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 60.0 , bottom: 5.0),
                   child: Center(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +136,7 @@ class _HistoryPortalState extends State<HistoryPortal> {
                   width: 1500,
                   height: 600,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 100.0 , left: 100 , right: 100),
+                    padding: EdgeInsets.only(top: 120.0 , left: 100 , right: 100),
                     child: FutureBuilder(
                         future: generateEmployeeList(),
                         builder: (context, data) {
