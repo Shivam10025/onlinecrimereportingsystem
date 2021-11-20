@@ -1,16 +1,4 @@
 # onlinecrimereportingsystem
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+This website develped for a DBMS course assignment, we uses dart , flutter , hostinger , phpmyadmin , mysql , for creating this good looking site. As we are not good enough increating too much stylish ui but this ui is best from us. if you want more about this project contact: shivambindal2611@gmail.com , pptsagar279@gmail.com , sanyamjain22800@gmail.com , deepakgarg2309@gmail.com , pk248212@gmail.com.
+![](images/cr(1).jpeg)
