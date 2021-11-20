@@ -1,19 +1,71 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-class ReportPortal extends StatefulWidget {
-  const ReportPortal({Key? key}) : super(key: key);
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:onlinecrimereportingsystem/Screesns/chistory.dart';
 
+import 'home.dart';
+import 'login.dart';
+class ReportPortal extends StatefulWidget {
+  late String email;
+  ReportPortal(this.email);
+  //const ReportPortal({Key? key}) : super(key: key);
   @override
   _ReportPortalState createState() => _ReportPortalState();
 }
 
 class _ReportPortalState extends State<ReportPortal> {
-  TextEditingController namec = TextEditingController();
-  TextEditingController mailc = TextEditingController();
-  TextEditingController phonec = TextEditingController();
-  TextEditingController pwdc = TextEditingController();
+  bool visible = false ;
+  TextEditingController tc = TextEditingController();
+  TextEditingController cc = TextEditingController();
+  TextEditingController dc = TextEditingController();
+  TextEditingController jc = TextEditingController();
+  Future userRegistration(BuildContext context) async{
+    setState(() {
+      visible = true ;
+    });
+    String tcp = tc.text;
+    String mail = widget.email;
+    String ccp = cc.text;
+    String dcp = dc.text;
+    String jcp = jc.text;
+
+    // SERVER API URL
+    var url = Uri.parse('https://ocmr.000webhostapp.com/report.php');
+
+    // Store all data with Param Name.
+    var data = {'email' : mail , 'tc' : tcp , 'cc' : ccp , 'dc' : dcp , 'jc' : jcp};
+
+    // Starting Web API Call.
+    var response = await http.post(url, body: json.encode(data));
+    // Getting Server response into variable.
+    var message = jsonDecode(response.body);
+    if(response.statusCode == 200){
+      setState(() {
+        visible = false;
+      });
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryPortal(mail)));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,45 +89,41 @@ class _ReportPortalState extends State<ReportPortal> {
                   width: 500,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Colors.white.withOpacity(0.75),
+                    color: Colors.black87.withOpacity(0.2),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(top: 20.0),
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Center(
+                            child: IconButton(
+                              icon: Icon(CupertinoIcons.home , color: Colors.red,),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                              },
+                            ),
+                          )
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.0),
                         child: Center(
                           child: Container(
                             alignment: Alignment.center,
-                            width: 400,
-                            height: 50,
-                            child: Text("Welcome",style: GoogleFonts.sora(color: Colors.deepPurple , fontSize: 22 , fontWeight: FontWeight.bold),),
+                            width: 200,
+                            height: 180,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              //color: Colors.red,
+                            ),
+                            child: Image.network('https://vils.ai/includes/img/login-register.png'),
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 6.0 , bottom: 5.0),
                         child: Center(
-                            child: Text("Log New Complain" , style: GoogleFonts.sora(color: Colors.deepPurple , fontSize: 22 , fontWeight: FontWeight.bold))
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15.0 , bottom: 0 , left: 15.0 , right: 15.0),
-                        child: TextField(
-                          keyboardType: TextInputType.phone,
-                          cursorColor: Colors.deepPurple,
-                         // controller: namec,
-                          decoration: InputDecoration(
-                            enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
-                            ),
-                            icon: new Icon(CupertinoIcons.book_solid),
-                            border: OutlineInputBorder(),
-                            labelText: "Aadhar Number",
-                            labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
-                            hintText: "Aadhar Number : 1234567812352",
-                            hintStyle: GoogleFonts.jetBrainsMono(),
-                          ),
+                            child: Text("Log New Complain" , style: GoogleFonts.sora(color: Colors.deepPurple , fontSize: 18 , fontWeight: FontWeight.bold))
                         ),
                       ),
                       Padding(
@@ -83,17 +131,19 @@ class _ReportPortalState extends State<ReportPortal> {
                         child: TextField(
                           keyboardType: TextInputType.streetAddress,
                           cursorColor: Colors.deepPurple,
-                         // controller: namec,
+                          controller: cc,
+                          autofocus: true,
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
                             ),
                             icon: new Icon(CupertinoIcons.location_solid),
                             border: OutlineInputBorder(),
-                            labelText: "Location of Crime",
+                            labelText: "Postel Zip Code",
                             labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
-                            hintText: "Location of Crime",
-                            hintStyle: GoogleFonts.jetBrainsMono(),
+                            hintText: "Postel Zip Code , 283115",
+                            hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                           ),
                         ),
                       ),
@@ -102,27 +152,44 @@ class _ReportPortalState extends State<ReportPortal> {
                         child: TextField(
                           keyboardType: TextInputType.streetAddress,
                           cursorColor: Colors.deepPurple,
-                         // controller: namec,
+                          autofocus: true,
+                          autocorrect: true,
+                          style: TextStyle(color: Colors.white),
+                          controller: tc,
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
                             ),
-
                             icon: new Icon(CupertinoIcons.tropicalstorm),
                             border: OutlineInputBorder(),
                             labelText: "Type of Crime",
                             labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                             hintText: "Type of Crime",
-                            hintStyle: GoogleFonts.jetBrainsMono(),
+                            hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 15.0 , bottom: 0 , left: 15.0 , right: 15.0),
                         child: TextField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.datetime,
                           cursorColor: Colors.deepPurple,
-                        //  controller: namec,
+                          autofocus: true,
+                          controller: dc,
+                          style: TextStyle(color: Colors.white),
+                          onTap: () {
+                            FocusScope.of(context).requestFocus(new FocusNode());
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2019, 1),
+                              lastDate: DateTime(2021,12),
+                            ).then((pickedDate){
+                              setState(() {
+                                dc.text = pickedDate.toString().substring(0 , 11);
+                              });
+                            });
+                          },
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -132,17 +199,20 @@ class _ReportPortalState extends State<ReportPortal> {
                             labelText: "Date of Crime",
                             labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                             hintText: "Date : dd-mm-yyyy",
-                            hintStyle: GoogleFonts.jetBrainsMono(),
+                            hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                           ),
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: 15.0 , bottom: 0 , left: 15.0 , right: 15.0),
                         child: TextField(
-                          maxLines: 10,
+                          maxLines: 6,
                           keyboardType: TextInputType.text,
                           cursorColor: Colors.deepPurple,
-                        //  controller: namec,
+                          autofocus: true,
+                          style: TextStyle(color: Colors.white),
+                         controller: jc,
+                          autocorrect: true,
                           decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -152,7 +222,7 @@ class _ReportPortalState extends State<ReportPortal> {
                             labelText: "Description",
                             labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                             hintText: "Describe the incident in details with time",
-                            hintStyle: GoogleFonts.jetBrainsMono(),
+                            hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                           ),
                         ),
                       ),
@@ -167,20 +237,20 @@ class _ReportPortalState extends State<ReportPortal> {
                             ),
                             child: FlatButton(
                               onPressed: () {
-                              if(namec.text.length<3){
-                                  Fluttertoast.showToast(msg: "Name should be atleast 3 characters.");
+                              if(cc.text.length!=6){
+                                  Fluttertoast.showToast(msg: "Enter A valid Zip Code");
                                 }
-                                else if(!mailc.text.contains("@")){
-                                  Fluttertoast.showToast(msg: "Email is Incorrect");
+                                else if(tc.text.length==0){
+                                  Fluttertoast.showToast(msg: "Enter type of crime is cumpolsory");
                                 }
-                                else if(phonec.text.length==0){
-                                  Fluttertoast.showToast(msg: "Phone Number is Mandatory");
+                                else if(dc.text.length==0){
+                                  Fluttertoast.showToast(msg: "Date is Mandatory");
                                 }
-                                else if(pwdc.text.length<6){
-                                  Fluttertoast.showToast(msg: "Password must be atleast six digits");
+                                else if(jc.text.length<20){
+                                  Fluttertoast.showToast(msg: "Description must be atleast 20 chars");
                                 }
                                 else {
-                                  //registernuse(context);
+                                  userRegistration(context);
                                 }
                                 // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
                               },
@@ -197,7 +267,7 @@ class _ReportPortalState extends State<ReportPortal> {
                         child: Center(
                           child: FlatButton(
                             onPressed: (){
-                              // Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => HistoryPortal(widget.email)));
                             },
                             child: Text(
                               "See Previous Complain",
@@ -205,6 +275,13 @@ class _ReportPortalState extends State<ReportPortal> {
                             ),
                           ),
                         ),
+                      ),
+                      Visibility(
+                          visible: visible,
+                          child: Container(
+                              margin: EdgeInsets.only(bottom: 30),
+                              child: CircularProgressIndicator()
+                          )
                       ),
                     ],
                   ),

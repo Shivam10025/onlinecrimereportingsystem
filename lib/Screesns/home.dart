@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onlinecrimereportingsystem/Screesns/loginpolice.dart';
+import 'package:onlinecrimereportingsystem/Screesns/regs.dart';
 import 'package:onlinecrimereportingsystem/widget/widget.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  //const HomeScreen({Key? key}) : super(key: key);
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -84,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: FlatButton(
                                   onPressed: () {
-                                    // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+                                     Navigator.push(context, MaterialPageRoute(builder: (_) => RegScreen()));
                                   },
                                   child: Text(
                                     'Register',
@@ -105,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 child: FlatButton(
                                   onPressed: () {
-                                    // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+                                     Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPoliceScreen()));
                                   },
                                   child: Text(
                                     'login',

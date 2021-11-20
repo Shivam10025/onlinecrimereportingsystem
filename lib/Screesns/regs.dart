@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:onlinecrimereportingsystem/Screesns/login.dart';
+import 'package:onlinecrimereportingsystem/Screesns/report.dart';
+
+import 'home.dart';
 class RegScreen extends StatefulWidget {
-  const RegScreen({Key? key}) : super(key: key);
+  //const RegScreen({Key? key}) : super(key: key);
 
   @override
   _RegScreenState createState() => _RegScreenState();
@@ -28,7 +32,10 @@ class _RegScreenState extends State<RegScreen> {
       invisible = !invisible;
     });
   }
-  Future userRegistration() async{
+  Future userRegistration(BuildContext context) async{
+    setState(() {
+      visible = true ;
+    });
     String nm = name.text;
     String email = mail.text;
     String pwd = password.text;
@@ -45,14 +52,29 @@ class _RegScreenState extends State<RegScreen> {
 
     // Starting Web API Call.
     var response = await http.post(url, body: json.encode(data));
-
     // Getting Server response into variable.
     var message = jsonDecode(response.body);
-    Fluttertoast.showToast(msg: "Done");
-    // If Web call Success than Hide the CircularProgressIndicator.
-
-    // Showing Alert Dialog with Response JSON Message.
-
+    if(response.statusCode == 200){
+      setState(() {
+        visible = false;
+      });
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(message),
+          actions: <Widget>[
+            FlatButton(
+              child: new Text("OK"),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -78,17 +100,28 @@ class _RegScreenState extends State<RegScreen> {
                       width: 500,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Colors.white.withOpacity(0.75),
+                        color: Colors.black87.withOpacity(0.2),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Center(
+                                child: IconButton(
+                                  icon: Icon(CupertinoIcons.home , color: Colors.red,),
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+                                  },
+                                ),
+                              )
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.0),
                             child: Center(
                               child: Container(
                                 width: 200,
-                                height: 120,
+                                height: 100,
                                 child: Image.network('https://miro.medium.com/max/498/1*Es2vCEieszU7QQqsLChl6A.png'),
                               ),
                             ),
@@ -96,7 +129,7 @@ class _RegScreenState extends State<RegScreen> {
                           Padding(
                             padding: EdgeInsets.only(top: 6.0 , bottom: 5.0),
                             child: Center(
-                                child: Text("Register" , style: GoogleFonts.sora(color: Colors.deepPurple , fontSize: 22 , fontWeight: FontWeight.bold))
+                                child: Text("Register" , style: GoogleFonts.sora(color: Colors.deepPurple , fontSize: 16 , fontWeight: FontWeight.bold))
                             ),
                           ),
                           Padding(
@@ -105,7 +138,9 @@ class _RegScreenState extends State<RegScreen> {
                               keyboardType: TextInputType.emailAddress,
                               cursorColor: Colors.deepPurple,
                               controller: name,
+                              autofocus: true,
                               autocorrect: true,
+                              style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -115,7 +150,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Name",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Enter Name",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -125,6 +160,8 @@ class _RegScreenState extends State<RegScreen> {
                               cursorColor: Colors.deepPurple,
                               keyboardType: TextInputType.phone,
                               controller: phone,
+                              autofocus: true,
+                              style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -134,7 +171,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Phone",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Enter Phone",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -143,6 +180,8 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               cursorColor: Colors.deepPurple,
                               keyboardType: TextInputType.emailAddress,
+                              autofocus: true,
+                              style: TextStyle(color: Colors.white),
                               controller: mail,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
@@ -153,7 +192,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Email",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Enter Email",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -163,6 +202,8 @@ class _RegScreenState extends State<RegScreen> {
                               cursorColor: Colors.deepPurple,
                               obscureText: invisible,
                               controller: password,
+                              autofocus: true,
+                              style: TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(color: Colors.deepPurple , width: 0.0)
@@ -172,13 +213,14 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Password",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Enter Password",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                                 suffix: InkWell(
                                   onTap: _togglePasswordView,
                                   child: Icon(
                                     invisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
+                                    color: Colors.red.withBlue(100),
                                   ),
                                 ),
                               ),
@@ -190,6 +232,8 @@ class _RegScreenState extends State<RegScreen> {
                               keyboardType: TextInputType.streetAddress,
                               cursorColor: Colors.deepPurple,
                               controller: address,
+                              autofocus: true,
+                              style: TextStyle(color: Colors.white),
                               autocorrect: true,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
@@ -200,7 +244,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Home Address",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Home Address",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -208,7 +252,9 @@ class _RegScreenState extends State<RegScreen> {
                             padding: EdgeInsets.only(top: 15.0 , bottom: 0 , left: 15.0 , right: 15.0),
                             child: TextField(
                               keyboardType: TextInputType.phone,
+                              autofocus: true,
                               cursorColor: Colors.deepPurple,
+                              style: TextStyle(color: Colors.white),
                               controller: aadhar,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
@@ -219,7 +265,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Aadhar Number",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Aadhar Number : 123456781235",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -228,7 +274,9 @@ class _RegScreenState extends State<RegScreen> {
                             child: TextField(
                               keyboardType: TextInputType.text,
                               cursorColor: Colors.deepPurple,
+                              autofocus: true,
                               controller: gender,
+                              style: TextStyle(color: Colors.white),
                               autocorrect: true,
                               decoration: InputDecoration(
                                 enabledBorder: const OutlineInputBorder(
@@ -239,7 +287,7 @@ class _RegScreenState extends State<RegScreen> {
                                 labelText: "Gender",
                                 labelStyle: GoogleFonts.sora(color: Colors.deepPurple),
                                 hintText: "Gender : Male , Female",
-                                hintStyle: GoogleFonts.jetBrainsMono(),
+                                hintStyle: GoogleFonts.jetBrainsMono(color: Colors.white.withRed(100)),
                               ),
                             ),
                           ),
@@ -247,7 +295,7 @@ class _RegScreenState extends State<RegScreen> {
                             padding: const EdgeInsets.only(left: 15.0 , right: 15.0 , top: 18.0 , bottom: 0.0),
                             child: Center(
                               child: Container(
-                                height: 50,
+                                height: 40,
                                 width: 250,
                                 decoration: BoxDecoration(
                                     color: Colors.deepPurple, borderRadius: BorderRadius.circular(20)
@@ -276,13 +324,13 @@ class _RegScreenState extends State<RegScreen> {
                                       Fluttertoast.showToast(msg: "Enter valid aadhar number");
                                     }
                                     else {
-                                      userRegistration();
+                                      userRegistration(context);
                                     }
                                     // Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
                                   },
                                   child: Text(
                                     'Create Account',
-                                    style: GoogleFonts.sora(color: Colors.white , fontSize: 25),
+                                    style: GoogleFonts.sora(color: Colors.white , fontSize: 20),
                                   ),
                                 ),
                               ),
@@ -293,7 +341,7 @@ class _RegScreenState extends State<RegScreen> {
                             child: Center(
                               child: FlatButton(
                                 onPressed: (){
-                                 // Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
                                 },
                                 child: Text(
                                   "Already have account?Sign in",

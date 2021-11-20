@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:onlinecrimereportingsystem/Screesns/chistory.dart';
+import 'package:onlinecrimereportingsystem/Screesns/complaintable.dart';
+import 'package:onlinecrimereportingsystem/Screesns/headquarter.dart';
+import 'package:onlinecrimereportingsystem/Screesns/login.dart';
+import 'package:onlinecrimereportingsystem/Screesns/loginhead.dart';
+import 'package:onlinecrimereportingsystem/Screesns/loginpolice.dart';
+import 'package:onlinecrimereportingsystem/Screesns/policedata.dart';
 import 'package:onlinecrimereportingsystem/Screesns/report.dart';
 
 import 'Screesns/home.dart';
@@ -21,7 +28,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: ReportPortal(),
+      home: HomeScreen(),
     );
   }
 }
